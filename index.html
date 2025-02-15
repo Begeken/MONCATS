@@ -1,54 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MonCats Web App</title>
+    <title>MonCats Mining</title>
+    <script type="text/javascript">
+        // Telegram Web App'i başlat
+        function launchWebApp() {
+            const user_id = new URLSearchParams(window.location.search).get('user_id');  // URL'den user_id al
+            if (!user_id) {
+                alert("User ID not found!");
+                return;
+            }
+
+            // Kazım işlemini başlat
+            fetch(`https://your-flask-server.com/start_mining?user_id=${user_id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        alert(data.message);
+                        if (data.message.includes("Mining in progress")) {
+                            // Butonu devre dışı bırak
+                            document.getElementById("miningButton").disabled = true;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
 </head>
 <body>
-    <h1>Welcome to MonCats!</h1>
-    <p>Click below to start mining:</p>
-    <button id="startMining">Start Mining</button>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", async function () {
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('user_id');
-
-        if (!userId) {
-            alert("User ID not found!");
-            return;
-        }
-
-        const startButton = document.getElementById("startMining");
-
-        async function checkMining() {
-            let response = await fetch(`http://127.0.0.1:5000/check_mining?user_id=${userId}`);
-            let data = await response.json();
-
-            if (data.success && data.remaining_time > 0) {
-                startButton.innerText = `Mining in progress... ⏳ ${Math.floor(data.remaining_time / 3600)}h`;
-                startButton.disabled = true;
-            } else {
-                startButton.innerText = "Start Mining";
-                startButton.disabled = false;
-            }
-        }
-
-        startButton.addEventListener("click", async () => {
-            let response = await fetch(`http://127.0.0.1:5000/start_mining?user_id=${userId}`);
-            let data = await response.json();
-
-            if (data.success) {
-                alert("Mining started!");
-                checkMining();
-            } else {
-                alert(data.message);
-            }
-        });
-
-        checkMining();
-    });
-    </script>
+    <h1>Welcome to MonCats Mining</h1>
+    <button id="miningButton" onclick="launchWebApp()">Start Mining</button>
 </body>
 </html>

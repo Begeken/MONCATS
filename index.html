@@ -1,98 +1,75 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MonCats Oyun</title>
+    <title>MonCats - Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        h1 {
-            color: #333;
-        }
-
-        .game-container {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
             text-align: center;
-            width: 80%;
-            max-width: 600px;
+            background-color: #f0f0f0;
         }
-
-        .game-header {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-        }
-
-        .cat-image {
-            width: 100px;
-            height: 100px;
-            margin: 10px;
-        }
-
-        .mcats-counter {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-
-        .action-button {
+        .header {
             background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+        }
+        .mcats-container {
+            margin-top: 30px;
+        }
+        .mcats-bar {
+            width: 60%;
+            height: 25px;
+            background-color: #4CAF50;
+            margin: 10px auto;
+        }
+        .mcats-text {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+        .button {
+            background-color: #007BFF;
             color: white;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
         }
-
-        .action-button:hover {
-            background-color: #45a049;
+        .button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-
-<div class="game-container">
-    <h1>MonCats Oyununa Hoş Geldiniz! 🐱</h1>
-    <div class="game-header">
-        Günlük Kazım: <span id="mined-mcats">0</span> MCats
+    <div class="header">
+        <h1>Welcome to MonCats Game! 🐱</h1>
+        <p>Start earning MCats by clicking below!</p>
     </div>
 
-    <!-- Kedi Resmi -->
-    <img class="cat-image" src="https://placekitten.com/200/200" alt="Kedi">
-    
-    <!-- MCats Sayacı -->
-    <div class="mcats-counter">
-        Toplam MCats: <span id="total-mcats">100</span>
+    <div class="mcats-container">
+        <div class="mcats-bar"></div>
+        <p class="mcats-text">Total MCats: <span id="mcats">118</span></p>
+        <button class="button" id="mineButton">Mine MCats!</button>
     </div>
 
-    <!-- Kazım Butonu -->
-    <button class="action-button" id="mine-button">Kazım Yap!</button>
-</div>
+    <script>
+        let totalMCats = 118;
+        let mineButton = document.getElementById("mineButton");
 
-<script>
-    let totalMCats = 100; // Başlangıç MCats
-    let minedMCats = 0;   // Kazanılan MCats
+        mineButton.onclick = function() {
+            totalMCats += 18; // Simulating earning 18 MCats
+            document.getElementById("mcats").textContent = totalMCats;
 
-    // Kazım butonuna tıklandığında
-    document.getElementById('mine-button').addEventListener('click', function() {
-        minedMCats += 1; // 1 MCats kazanın
-        totalMCats += 1; // Toplam MCats'ı arttır
-        document.getElementById('mined-mcats').innerText = minedMCats;
-        document.getElementById('total-mcats').innerText = totalMCats;
-    });
-</script>
+            let mcatsBar = document.querySelector(".mcats-bar");
+            mcatsBar.style.width = (totalMCats / 200 * 100) + "%"; // Simulate progress
 
+            // Show a message after mining
+            mineButton.textContent = "Mining... 18 MCats Earned!";
+            setTimeout(function() {
+                mineButton.textContent = "Mine MCats!";
+            }, 1500); // Change back after 1.5 seconds
+        };
+    </script>
 </body>
 </html>

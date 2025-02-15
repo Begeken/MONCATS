@@ -1,75 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MonCats - Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
+    <title>MonCats Mining</title>
+    <script type="text/javascript">
+        // Başlangıçta mining işlemini başlatacak bir fonksiyon
+        function startMining() {
+            fetch('/start_mining')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Mining started! You will get MCats after 24 hours!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
-        .header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-        }
-        .mcats-container {
-            margin-top: 30px;
-        }
-        .mcats-bar {
-            width: 60%;
-            height: 25px;
-            background-color: #4CAF50;
-            margin: 10px auto;
-        }
-        .mcats-text {
-            font-size: 18px;
-            margin-top: 10px;
-        }
-        .button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    </script>
 </head>
 <body>
-    <div class="header">
-        <h1>Welcome to MonCats Game! 🐱</h1>
-        <p>Start earning MCats by clicking below!</p>
-    </div>
-
-    <div class="mcats-container">
-        <div class="mcats-bar"></div>
-        <p class="mcats-text">Total MCats: <span id="mcats">118</span></p>
-        <button class="button" id="mineButton">Mine MCats!</button>
-    </div>
-
-    <script>
-        let totalMCats = 118;
-        let mineButton = document.getElementById("mineButton");
-
-        mineButton.onclick = function() {
-            totalMCats += 18; // Simulating earning 18 MCats
-            document.getElementById("mcats").textContent = totalMCats;
-
-            let mcatsBar = document.querySelector(".mcats-bar");
-            mcatsBar.style.width = (totalMCats / 200 * 100) + "%"; // Simulate progress
-
-            // Show a message after mining
-            mineButton.textContent = "Mining... 18 MCats Earned!";
-            setTimeout(function() {
-                mineButton.textContent = "Mine MCats!";
-            }, 1500); // Change back after 1.5 seconds
-        };
-    </script>
+    <h1>Welcome to MonCats Mining</h1>
+    <button onclick="startMining()">Start Mining</button>
 </body>
 </html>
